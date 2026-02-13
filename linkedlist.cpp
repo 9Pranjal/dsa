@@ -1,69 +1,102 @@
 #include<iostream>
 using namespace std;
 
+struct Node {
+    int data;
+    Node* next;
+};
 
-int main(){
-    
-    cout << "enter the size of stack: ";
-    cin >> size;
+Node* head = NULL;
 
-    int stack[size];   
+int main() {
 
-    int choice, value
+    int choice, value;
 
-    do{
-       cout << "\n1. push element";
-        cout << "\n2. pop element";
-        cout << "\n3. display element";
-        cout << "\n4. exit";
+    do {
+        cout << "\n1. insert at Beginning";
+        cout << "\n2. insert at End";
+        cout << "\n3. delete from Beginning";
+        cout << "\n4. display";
+        cout << "\n5. exit";
         cout << "\nenter your choice: ";
         cin >> choice;
 
-        switch(choice){
-            case 1 : 
-                  if(top == size - 1) {
-                    cout << "stack overflow\n";
-                }
-                else {
-                    cout << "enter value to push: ";
-                    cin >> value;
-                    top++;
-                    stack[top] = value;
-                    cout << "element pushed successfully\n";
-                }
-            break;
-                
-            case 2: 
-                if(top == -1) {
-                    cout << "stack underflow\n";
-                }
-                else {
-                    cout << "popped element: " << stack[top] << endl;
-                    top--;
-                }
-            break;
+        switch(choice) {
 
-            break;
-            case 3: 
-                if(top == -1) {
-                    cout << "stack is empty\n";
+            case 1: {   
+                Node* newNode = new Node();
+                cout << "enter value: ";
+                cin >> value;
+
+                newNode->data = value;
+                newNode->next = head;
+                head = newNode;
+
+                cout << "inserted at beginning\n";
+                break;
+            }
+
+            case 2: {   
+                Node* newNode = new Node();
+                cout << "enter value: ";
+                cin >> value;
+
+                newNode->data = value;
+                newNode->next = NULL;
+
+                if(head == NULL) {
+                    head = newNode;
                 }
                 else {
-                    cout << "stack elements are:\n";
-                    for(int i = top; i >= 0; i--) {
-                        cout << stack[i] << endl;
+                    Node* temp = head;
+                    while(temp->next != NULL) {
+                        temp = temp->next;
                     }
+                    temp->next = newNode;
                 }
-            break;
 
-            case 4: 
-                 cout << "exiting\n";
-            break;
+                cout << "inserted at end\n";
+                break;
+            }
 
-            default: 
-                 cout << "invalid choice\n";
-            break;
+            case 3: {   
+                if(head == NULL) {
+                    cout << "list is empty\n";
+                }
+                else {
+                    Node* temp = head;
+                    cout << "deleted element: " << head->data << endl;
+                    head = head->next;
+                    delete temp;
+                }
+                break;
+            }
+
+            case 4: {   
+                if(head == NULL) {
+                    cout << "list is empty\n";
+                }
+                else {
+                    Node* temp = head;
+                    cout << "linked List: ";
+                    while(temp != NULL) {
+                        cout << temp->data << " -> ";
+                        temp = temp->next;
+                    }
+                    cout << "NULL\n";
+                }
+                break;
+            }
+
+            case 5:
+                cout << "exiting\n";
+                break;
+
+            default:
+                cout << "invalid choice\n";
         }
-    }while()
-}
 
+    } while(choice != 5);
+
+    return 0;
+}
